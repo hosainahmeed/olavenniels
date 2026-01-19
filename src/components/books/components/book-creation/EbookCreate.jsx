@@ -171,7 +171,7 @@ const EbookCreate = ({ setShowModal, item, setSelectedItem }) => {
                 <Input placeholder="Input total pages" type="number" />
               </Form.Item>
 
-              <TagsSelect form={form} item={item} />
+              {/* <TagsSelect form={form} item={item} /> */}
 
               <PdfUploadSection form={form} pdfFile={pdfFile} setPdfFile={setPdfFile} />
 

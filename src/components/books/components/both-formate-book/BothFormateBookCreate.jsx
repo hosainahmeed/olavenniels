@@ -260,7 +260,7 @@ const BothFormateBookCreate = ({ setShowModal, item, setSelectedItem }) => {
                                 </Select>
                             </Form.Item>
 
-                            <TagsSelect form={form} item={item} />
+                            {/* <TagsSelect form={form} item={item} /> */}
 
                             <Form.Item label="Total Pages" name="totalPages">
                                 <Input

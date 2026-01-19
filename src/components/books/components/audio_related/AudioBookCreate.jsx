@@ -266,7 +266,7 @@ const AudioBookCreate = ({ setShowModal, item, setSelectedItem }) => {
                 </Select>
               </Form.Item>
 
-              <TagsSelect form={form} item={item} />
+              {/* <TagsSelect form={form} item={item} /> */}
               <Form.Item
                 label="Duration"
                 name="duration"
