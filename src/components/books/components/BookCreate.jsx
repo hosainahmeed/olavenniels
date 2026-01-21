@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { CloseOutlined } from "@ant-design/icons";
 import ImgCrop from "antd-img-crop";
 import CustomInput from "../../form-component/CustomInput";
-
+const { Dragger } = Upload;
 function BookCreate({ setShowModal }) {
   const [preview, setPreview] = useState(null);
   const [image, setImage] = useState(null);
@@ -52,12 +52,32 @@ function BookCreate({ setShowModal }) {
     console.log("Received values of form:", data);
   };
 
+
+  const props = {
+    name: 'file',
+    multiple: true,
+    action: 'https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload',
+    onChange(info) {
+      const { status } = info.file;
+      if (status !== 'uploading') {
+        console.log(info.file, info.fileList);
+      }
+      if (status === 'done') {
+        message.success(`${info.file.name} file uploaded successfully.`);
+      } else if (status === 'error') {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+    onDrop(e) {
+      console.log('Dropped files', e.dataTransfer.files);
+    },
+  };
   return (
     <div className="flex gap-6 w-full">
       <Tabs style={{ width: "100%" }}>
         {/* Upload Tab */}
         <Tabs.TabPane tab="Upload Book Cover Image" key="1">
-          <div className="w-full border border-dashed border-gray-300 rounded flex items-center justify-center relative !h-[300px]">
+          {/* <div className="w-full border border-dashed border-gray-300 rounded flex items-center justify-center relative !h-[300px]">
             {preview ? (
               <motion.img
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -93,7 +113,17 @@ function BookCreate({ setShowModal }) {
                 <CloseOutlined className="!text-red-500" />
               </button>
             )}
-          </div>
+          </div> */}
+          <Dragger {...props}>
+            <p className="ant-upload-drag-icon">
+              <InboxOutlined />
+            </p>
+            <p className="ant-upload-text">Click or drag file to this area to upload</p>
+            <p className="ant-upload-hint">
+              Support for a single or bulk upload. Strictly prohibited from uploading company data or other
+              banned files.
+            </p>
+          </Dragger>
           <Button
             className="!bg-[var(--secondary-color)] !mt-2 hover:!bg-[var(--secondary-color)] border-none !text-white"
             onClick={() => setShowModal(false)}

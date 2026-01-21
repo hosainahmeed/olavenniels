@@ -91,6 +91,7 @@ const AudioUploadField = ({
 // AudioBookCreate
 
 const AudioBookCreate = ({ setShowModal, item, setSelectedItem }) => {
+  console.log(item?._id)
   const [form] = Form.useForm();
   const { data: categories, isLoading: categoriesLoading } = useGetCategoriesQuery({});
   const [addAudioBook, { isLoading: isSubmitting }] = useAddAudioBookMutation();
@@ -183,7 +184,7 @@ const AudioBookCreate = ({ setShowModal, item, setSelectedItem }) => {
         let response;
 
         if (item) {
-          response = await updateAudioBook({ id: item._id, data: formData }).unwrap();
+          response = await updateAudioBook({ id: item?._id, data: formData }).unwrap();
         } else {
           response = await addAudioBook({ data: formData }).unwrap();
         }
@@ -299,7 +300,7 @@ const AudioBookCreate = ({ setShowModal, item, setSelectedItem }) => {
                   type="primary"
                   htmlType="submit"
                   className="!bg-yellow-500 hover:!bg-yellow-600 border-none px-6"
-                  loading={isSubmitting}
+                  loading={isSubmitting || isUpdating}
                 >
                   Publish
                 </Button>
