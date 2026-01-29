@@ -112,6 +112,14 @@ const BothFormateBookCreate = ({ setShowModal, item, setSelectedItem }) => {
         setPdfFile,
     } = useAudioBookForm();
 
+    const formatDuration = (seconds) => {
+        if (!seconds) return null;
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        const secs = seconds % 60;
+        return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    };
+
     useEffect(() => {
         if (item) {
             form.setFieldsValue({
@@ -123,6 +131,7 @@ const BothFormateBookCreate = ({ setShowModal, item, setSelectedItem }) => {
                 bookCover: item?.bookCover,
                 audioUrl: item?.audioUrl,
                 pdfFile: item?.pdfFile,
+                duration: item?.duration ? dayjs(formatDuration(item?.duration), 'HH:mm:ss') : null,
             });
 
             if (item?.bookCover) {
@@ -137,6 +146,10 @@ const BothFormateBookCreate = ({ setShowModal, item, setSelectedItem }) => {
             } else {
                 setPreview(null);
                 setFileList([]);
+            }
+
+            if (item?.pdfFile) {
+                setPdfFile(imageUrl(item.pdfFile));
             }
 
             if (item?.audioUrl) {
