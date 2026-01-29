@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Form, Input, Select, Button, Tabs } from "antd";
+import { Form, Input, Select, Button, Tabs, TimePicker } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import { useGetCategoriesQuery } from "../../../../Redux/Apis/service/categoryApis";
 import ImageUploadSection from "../audio_related/ImageUploadSection.jsx";
@@ -9,7 +9,7 @@ import TagsSelect from "../share/TagsSelect.jsx";
 import { prepareFormData, useAudioBookForm } from "../book-creation/AudioBookCreateHelpers.js";
 import PdfUploadSection from "../book-creation/PdfUploadSection.jsx";
 import { useAddBothFormatBookMutation, useUpdateBothFormatBookMutation } from "../../../../Redux/Apis/books/bothFormatBook.js";
-
+import dayjs from "dayjs";
 const { TabPane } = Tabs;
 
 const AudioUploadField = ({
@@ -270,6 +270,16 @@ const BothFormateBookCreate = ({ setShowModal, item, setSelectedItem }) => {
                                     min={1}
                                     rules={[{ required: true, message: "Please enter total pages" }]}
                                 />
+                            </Form.Item>
+                            <Form.Item
+                                label="Duration"
+                                name="duration"
+                                getValueProps={(value) => ({
+                                    value: value ? dayjs(value, 'HH:mm:ss') : null
+                                })}
+                                normalize={(value) => value ? value.format('HH:mm:ss') : null}
+                            >
+                                <TimePicker format="HH:mm:ss" style={{ width: '100%' }} />
                             </Form.Item>
                             <AudioUploadField
                                 audioInputRef={audioInputRef}
